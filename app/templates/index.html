@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', path='css/style.css') }}">
-
 </head>
-
 <body>
+<header>
+    <nav class="navbar">
 
-<h1>Expense Tracker</h1>
+        <div class="logo">
+            Expense Tracker
+        </div>
 
-<p>Welcome to our project!</p>
+        <ul class="nav-links">
+
+            <li><a href="/">Home</a></li>
+
+            <li><a href="#">Login</a></li>
+
+            <li><a href="#">Register</a></li>
+
+            <li><a href="#">Contact</a></li>
+
+        </ul>
+
+    </nav>
+</header>   
 
 </body>
 </html>
