@@ -70,10 +70,8 @@ body{
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #e58626,#e58626);
     height: 100vh;
 
-    display: flex;
     justify-content: center;
     align-items: center;
 }
