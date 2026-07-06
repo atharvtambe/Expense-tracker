@@ -1,3 +1,5 @@
+from http.client import HTTPResponse
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -12,3 +14,11 @@ templates = Jinja2Templates(directory="app/templates")
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse(request=request,name="index.html")
+
+@app.get("/login")
+def login(request:Request):
+    return templates.TemplateResponse(request=request,name="login.html")
+
+@app.get("/register")
+def register(request:Request):
+    return templates.TemplateResponse(request=request,name="register.html")

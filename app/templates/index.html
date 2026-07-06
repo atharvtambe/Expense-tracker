@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', path='css/style.css') }}">
-</head>
-<body>
-<header>
-    <nav class="navbar">
+{% block title %}
+Home
+{% endblock %}
 
-        <div class="logo">
-            Expense Tracker
-        </div>
+{% block content %}
 
-        <ul class="nav-links">
+<section class="hero">
 
-            <li><a href="/">Home</a></li>
+    <h1>Manage Your Money Smarter</h1>
 
-            <li><a href="#">Login</a></li>
+    <p>
+        Track your income and expenses with ease.
+    </p>
 
-            <li><a href="#">Register</a></li>
+</section>
 
-            <li><a href="#">Contact</a></li>
-
-        </ul>
-
-    </nav>
-</header>   
-
-</body>
-</html>
+{% endblock %}
