@@ -76,3 +76,27 @@ body {
     align-items: center;
 }
 
+
+footer{
+    background:#111827;
+    color:#fff;
+    padding:50px 20px;
+    margin-top:80px;
+}
+
+.footer-content{
+    max-width:1500px;
+    margin:0 auto;
+    text-align:center;
+}
+
+.footer-content h2{
+    margin-bottom:10px;
+    font-size:28px;
+}
+
+.footer-content p{
+    color:#d1d5db;
+    margin:10px 0;
+    line-height:1.6;
+}

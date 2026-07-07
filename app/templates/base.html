@@ -9,6 +9,8 @@
     <link rel="stylesheet"
           href="{{ url_for('static', path='css/style.css') }}">
 
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+
     {% block css %}{% endblock %}
 </head>
 
@@ -41,6 +43,27 @@
     {% endblock %}
 
 </main>
+
+<footer>
+
+    <div class="footer-content">
+
+        <h2>Expense Tracker</h2>
+
+        <p>
+            Smart Finance. Better Future.
+        </p>
+
+        <p>
+
+            © 2026 Expense Tracker.
+            All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
 
 {% block javascript %}
 {% endblock %}
