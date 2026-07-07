@@ -1,18 +1,50 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home
+Expense Tracker
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', path='css/home.css') }}">
 {% endblock %}
 
 {% block content %}
 
 <section class="hero">
 
-    <h1>Manage Your Money Smarter</h1>
+    <div class="hero-left">
 
-    <p>
-        Track your income and expenses with ease.
-    </p>
+        <h1>
+            Manage Your Money Smarter
+        </h1>
+
+        <p>
+            Track your income, expenses, and savings in one
+            beautiful dashboard.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/register" class="btn btn-primary">
+                Get Started
+            </a>
+
+            <a href="/contact" class="btn btn-secondary">
+                Learn More
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <img
+            src="{{ url_for('static', path='images/undraw_system-interface_jffo.png') }}"
+            alt="Finance Illustration">
+
+    </div>
 
 </section>
 
