@@ -4,6 +4,9 @@ from app.config import settings
 from app.routers import home
 from app.routers import auth
 from app.routers import contact
+from app.database import Base, engine
+
+import app.models
 
 from sqlalchemy import text
 from app.database import engine
@@ -30,3 +33,6 @@ def db_test():
         return {
             "database": result.scalar()
         }
+        
+        
+Base.metadata.create_all(bind=engine)
