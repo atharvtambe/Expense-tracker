@@ -35,4 +35,3 @@ def db_test():
         }
         
         
-Base.metadata.create_all(bind=engine)

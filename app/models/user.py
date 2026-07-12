@@ -37,3 +37,5 @@ class User(Base):
         back_populates="owner",
         cascade="all, delete"
     )
+    
+    phone_number = Column(String(20), nullable=True)
