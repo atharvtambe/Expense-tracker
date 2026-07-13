@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.routers import home
 from app.routers import auth
-from app.routers import contact
+from app.routers import contact,register
 from app.database import Base, engine
 
 import app.models
@@ -18,6 +18,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.include_router(home.router)
 app.include_router(auth.router)
 app.include_router(contact.router)
+app.include_router(register.router)
 
 
 
