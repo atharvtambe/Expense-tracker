@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 
 from app.auth import create_access_token
-from app.dependencies import get_db
+from app.database import get_db
 from app.models.user import User
 from app.schemas.auth import Login
 from app.utils.security import verify_password
