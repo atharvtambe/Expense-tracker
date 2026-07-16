@@ -1,18 +1,19 @@
-from pydantic import BaseModel
 from datetime import date
-
+from pydantic import BaseModel
 
 class ExpenseCreate(BaseModel):
-    amount: float
+    title: str
     description: str
+    amount: float
     date: date
     category_id: int
 
 
 class ExpenseResponse(BaseModel):
     id: int
-    amount: float
+    title: str
     description: str
+    amount: float
     date: date
     category_id: int
     user_id: int

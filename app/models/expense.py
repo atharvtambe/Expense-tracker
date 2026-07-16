@@ -1,56 +1,24 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    Float,
-    String,
-    Date,
-    ForeignKey
-)
-
+from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-
 from app.database import Base
-
 
 class Expense(Base):
     __tablename__ = "expenses"
 
-    id = Column(
-        Integer,
-        primary_key=True,
-        index=True
-    )
+    id = Column(Integer, primary_key=True, index=True)
 
-    amount = Column(
-        Float,
-        nullable=False
-    )
+    title = Column(String, nullable=False)
 
-    description = Column(
-        String(255)
-    )
+    description = Column(String)
 
-    date = Column(
-        Date,
-        nullable=False
-    )
+    amount = Column(Float, nullable=False)
 
-    user_id = Column(
-        Integer,
-        ForeignKey("users.id")
-    )
+    date = Column(Date, nullable=False)
 
-    category_id = Column(
-        Integer,
-        ForeignKey("categories.id")
-    )
+    category_id = Column(Integer, ForeignKey("categories.id"))
 
-    owner = relationship(
-        "User",
-        back_populates="expenses"
-    )
+    user_id = Column(Integer, ForeignKey("users.id"))
 
-    category = relationship(
-        "Category",
-        back_populates="expenses"
-    )
+    category = relationship("Category")
+
+    owner = relationship("User", back_populates="expenses")

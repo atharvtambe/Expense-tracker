@@ -3,7 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.routers import home
 from app.routers import auth
-from app.routers import contact,register,user,category
+from app.routers import contact,register,user,category,expense
+
 from app.database import Base, engine
 
 import app.models
@@ -21,7 +22,11 @@ app.include_router(contact.router)
 app.include_router(register.router)
 app.include_router(user.router)
 app.include_router(category.router)
+app.include_router(expense.router)
 
+
+
+Base.metadata.create_all(bind=engine)
 
 
 print(settings.DATABASE_URL)
