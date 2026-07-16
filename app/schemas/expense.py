@@ -1,7 +1,7 @@
-from datetime import date
 from pydantic import BaseModel
+from datetime import date
 
-class ExpenseCreate(BaseModel):
+class ExpenseBase(BaseModel):
     title: str
     description: str
     amount: float
@@ -9,13 +9,16 @@ class ExpenseCreate(BaseModel):
     category_id: int
 
 
-class ExpenseResponse(BaseModel):
+class ExpenseCreate(ExpenseBase):
+    pass
+
+
+class ExpenseUpdate(ExpenseBase):
+    pass
+
+
+class ExpenseResponse(ExpenseBase):
     id: int
-    title: str
-    description: str
-    amount: float
-    date: date
-    category_id: int
     user_id: int
 
     class Config:
