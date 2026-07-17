@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.dependencies import get_current_user
-
+from typing import Optional
 from app.crud.expense import create_expense, delete_expense, get_expenses, update_expense
 
-from app.schemas.expense import ExpenseCreate, ExpenseUpdate
+from app.schemas.expense import ExpenseCreate, ExpenseResponse, ExpenseUpdate
 
 from app.models.user import User
 
@@ -90,3 +90,19 @@ def delete(
         )
 
     return deleted
+
+@router.get("/", response_model=list[ExpenseResponse])
+def list_expenses(
+    category_id: Optional[int] = None,
+    min_amount: Optional[float] = None,
+    max_amount: Optional[float] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return get_expenses(
+        db=db,
+        user_id=current_user.id,
+        category_id=category_id,
+        min_amount=min_amount,
+        max_amount=max_amount,
+    )
