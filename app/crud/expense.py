@@ -23,12 +23,70 @@ def create_expense(db: Session, expense: ExpenseCreate, user_id: int):
     return new_expense
 
 
-def get_expenses(db: Session, user_id: int):
-    return (
-        db.query(Expense)
-        .filter(Expense.user_id == user_id)
-        .all()
+from sqlalchemy import desc
+
+def get_expenses(
+    db,
+    user_id,
+    category_id=None,
+    min_amount=None,
+    max_amount=None,
+    search=None,
+    sort_by=None,
+    order="asc",
+    page=1,
+    limit=10,
+):
+    query = db.query(Expense).filter(
+        Expense.user_id == user_id
     )
+
+    # Category Filter
+    if category_id:
+        query = query.filter(
+            Expense.category_id == category_id
+        )
+
+    # Amount Filters
+    if min_amount is not None:
+        query = query.filter(
+            Expense.amount >= min_amount
+        )
+
+    if max_amount is not None:
+        query = query.filter(
+            Expense.amount <= max_amount
+        )
+
+    # Search
+    if search:
+        query = query.filter(
+            Expense.title.ilike(f"%{search}%")
+        )
+
+    # -----------------------------
+    # SORTING (Add here)
+    # -----------------------------
+    if sort_by == "amount":
+        if order == "desc":
+            query = query.order_by(desc(Expense.amount))
+        else:
+            query = query.order_by(Expense.amount)
+
+    elif sort_by == "date":
+        if order == "desc":
+            query = query.order_by(desc(Expense.date))
+        else:
+            query = query.order_by(Expense.date)
+
+    # -----------------------------
+    # PAGINATION
+    # -----------------------------
+    offset = (page - 1) * limit
+
+    query = query.offset(offset).limit(limit)
+
+    return query.all()
     
 def update_expense(db, expense_id, expense_data, user_id):
     expense = (

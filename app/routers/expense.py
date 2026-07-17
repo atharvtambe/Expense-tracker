@@ -106,3 +106,30 @@ def list_expenses(
         min_amount=min_amount,
         max_amount=max_amount,
     )
+    
+    
+@router.get("/", response_model=list[ExpenseResponse])
+def list_expenses(
+    category_id: int | None = None,
+    min_amount: float | None = None,
+    max_amount: float | None = None,
+    search: str | None = None,
+    sort_by: str | None = None,
+    order: str = "asc",
+    page: int = 1,
+    limit: int = 10,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return get_expenses(
+        db=db,
+        user_id=current_user.id,
+        category_id=category_id,
+        min_amount=min_amount,
+        max_amount=max_amount,
+        search=search,
+        sort_by=sort_by,
+        order=order,
+        page=page,
+        limit=limit,
+    )
