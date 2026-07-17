@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies import get_current_user
 
-from app.crud.expense import create_expense, get_expenses, update_expense
+from app.crud.expense import create_expense, delete_expense, get_expenses, update_expense
 
 from app.schemas.expense import ExpenseCreate, ExpenseUpdate
 
@@ -70,3 +70,23 @@ def update(
         )
 
     return updated
+
+@router.delete("/{expense_id}")
+def delete(
+    expense_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    deleted = delete_expense(
+        db,
+        expense_id,
+        current_user.id
+    )
+
+    if not deleted:
+        raise HTTPException(
+            status_code=404,
+            detail="Expense not found"
+        )
+
+    return deleted
