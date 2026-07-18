@@ -10,6 +10,17 @@ from app.schemas.expense import ExpenseCreate, ExpenseResponse, ExpenseUpdate
 
 from app.models.user import User
 
+import csv
+import io
+
+from fastapi.responses import StreamingResponse
+from app.crud.expense import get_all_expenses
+
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus import Table
+from reportlab.platypus import TableStyle
+from reportlab.lib import colors
+
 router = APIRouter(
     prefix="/expenses",
     tags=["Expenses"]
@@ -47,6 +58,104 @@ def list_expenses(
     return get_expenses(
         db,
         current_user.id
+    )
+    
+    
+@router.get("/export/csv")
+def export_expenses_csv(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    expenses = get_all_expenses(db, current_user.id)
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Title",
+        "Description",
+        "Amount",
+        "Date",
+        "Category ID"
+    ])
+
+    for expense in expenses:
+        writer.writerow([
+            expense.title,
+            expense.description,
+            expense.amount,
+            expense.date,
+            expense.category_id
+        ])
+
+    output.seek(0)
+
+    return StreamingResponse(
+        output,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition":
+            "attachment; filename=expenses.csv"
+        }
+    )
+    
+    
+@router.get("/export/pdf")
+def export_expenses_pdf(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    expenses = get_all_expenses(db, current_user.id)
+
+    buffer = io.BytesIO()
+
+    pdf = SimpleDocTemplate(buffer)
+
+    data = [
+        [
+            "Title",
+            "Description",
+            "Amount",
+            "Date",
+            "Category ID"
+        ]
+    ]
+
+    for expense in expenses:
+        data.append([
+            expense.title,
+            expense.description,
+            str(expense.amount),
+            str(expense.date),
+            str(expense.category_id)
+        ])
+
+    table = Table(data)
+
+    table.setStyle(TableStyle([
+        ("BACKGROUND",(0,0),(-1,0),colors.grey),
+        ("TEXTCOLOR",(0,0),(-1,0),colors.whitesmoke),
+
+        ("GRID",(0,0),(-1,-1),1,colors.black),
+
+        ("BACKGROUND",(0,1),(-1,-1),colors.beige),
+
+        ("ALIGN",(0,0),(-1,-1),"CENTER"),
+
+        ("BOTTOMPADDING",(0,0),(-1,0),10),
+    ]))
+
+    pdf.build([table])
+
+    buffer.seek(0)
+
+    return StreamingResponse(
+        buffer,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition":
+            "attachment; filename=expenses.pdf"
+        }
     )
 
 @router.put("/{expense_id}")
@@ -133,3 +242,5 @@ def list_expenses(
         page=page,
         limit=limit,
     )
+    
+    

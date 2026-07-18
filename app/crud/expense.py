@@ -184,3 +184,10 @@ def get_expenses(
         )
 
     return query.all()
+
+def get_all_expenses(db: Session, user_id: int):
+    return (
+        db.query(Expense)
+        .filter(Expense.user_id == user_id)
+        .all()
+    )
