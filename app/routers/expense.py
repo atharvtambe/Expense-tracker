@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -26,7 +26,11 @@ router = APIRouter(
     tags=["Expenses"]
 )
 
-@router.post("/")
+@router.post(
+    "/",
+    response_model=ExpenseResponse,
+    status_code=status.HTTP_201_CREATED
+)
 def add_expense(
     expense: ExpenseCreate,
     db: Session = Depends(get_db),

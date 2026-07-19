@@ -18,6 +18,14 @@ A full-stack Expense Tracker built with:
 - Charts
 - Responsive UI
 
+
+ ## Testing
+
+Run all tests:
+
+```bash
+pytest -v
+
 ## Status
 
 🚧 Under Development
