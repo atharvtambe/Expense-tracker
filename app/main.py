@@ -28,18 +28,3 @@ app.include_router(dashboard.router)
 
 Base.metadata.create_all(bind=engine)
 
-
-print(settings.DATABASE_URL)
-
-@app.get("/db-test")
-def db_test():
-
-    with engine.connect() as connection:
-
-        result = connection.execute(text("SELECT version();"))
-
-        return {
-            "database": result.scalar()
-        }
-        
-        
